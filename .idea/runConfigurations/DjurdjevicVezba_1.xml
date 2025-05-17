@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="DjurdjevicVezba-1" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="hr.java.vezbe.entitet.Glavna" />
+    <module name="DjurdjevicVezba-1" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
