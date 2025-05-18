@@ -32,7 +32,7 @@ public class Test {
         listaPredmeta.add(predmet2);
 
         Ispit ispit1 = new Ispit(predmet1, student1, 5, LocalDateTime.of(2025,5, 6, 15, 30));
-        Ispit ispit2 = new Ispit(predmet2, student2, 5, LocalDateTime.of(2025,5, 6, 15, 30));
+        Ispit ispit2 = new Ispit(predmet2, student2, 4, LocalDateTime.of(2025,5, 6, 15, 30));
         Ispit ispit3 = new Ispit(predmet1, student1, 5, LocalDateTime.of(2025,5, 6, 15, 30));
         Ispit ispit4 = new Ispit(predmet1, student2, 5, LocalDateTime.of(2025,5, 6, 15, 30));
         listaIspita.add(ispit1);
@@ -42,6 +42,8 @@ public class Test {
 
         FakultetRacunarstva fk = new FakultetRacunarstva("Fakultet", listaPredmeta, listaProfesora , listaStudenata ,listaIspita);
         System.out.println(fk.odrediNajuspesnijegStudentaNaGodini(2018));
+
+        System.out.println(fk.odrediStudentaZaRektorovuNagradu());
 
 
 

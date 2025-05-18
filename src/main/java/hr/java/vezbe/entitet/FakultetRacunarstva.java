@@ -13,7 +13,18 @@ public class FakultetRacunarstva extends ObrazovnaUstanova implements Diplomski 
 
     @Override
     public Student odrediStudentaZaRektorovuNagradu() {
-        return null;
+        Student rektorovS = null;
+        double prosekNajveci = 0;
+        for (Student student : super.getStudenti()) {
+            ArrayList<Ispit> listaIspita = filtrirajIspitePoStudentu(super.getIspiti(), student);
+            BigDecimal prosekStudenta = odrediProsekOceneNaIspitima(listaIspita);
+            if (prosekStudenta.doubleValue() > prosekNajveci) {
+                prosekNajveci = prosekStudenta.doubleValue();
+                rektorovS = student;
+            }
+
+        }
+        return rektorovS;
     }
 
     @Override

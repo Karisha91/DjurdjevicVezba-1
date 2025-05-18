@@ -68,6 +68,10 @@ public class Glavna {
                     scanner.nextLine();
                     System.out.println("Konacna ocena studija za studenta " + studentiPoUstanovi.get(j) + " je " + fr.izracunajKonacnuOcenuStudijaZaStudenta(ispitiPoUstanovi, ocenaZavrsnog, ocenaOdbrane));
                 }
+                Student najboljiFR = fr.odrediNajuspesnijegStudentaNaGodini(2018);
+                Student rektorov = fr.odrediStudentaZaRektorovuNagradu();
+                System.out.println("Najbolji student u 2018. godini je " + najboljiFR + " JMBG: " + najboljiFR.getJmbg());
+                System.out.println("Student koji je ostvario Rektorovu nagradu je: " + rektorov + "JMBG: " + rektorov.getJmbg());
             }
         }
     }
@@ -206,6 +210,7 @@ public class Glavna {
             scanner.nextLine();
             System.out.print("Unesite datum i vreme ispita u formatu (dd.MM.yyyy.THH:mm): ");
             String datumIvreme = scanner.nextLine();
+            scanner.nextLine();
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.'T'HH:mm");
             LocalDateTime dateTime = LocalDateTime.parse(datumIvreme, formatter);
