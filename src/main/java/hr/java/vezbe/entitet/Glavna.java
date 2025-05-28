@@ -15,6 +15,7 @@ public class Glavna {
 
         Scanner scanner = new Scanner(System.in);
 
+
         System.out.print("Unesite broj obrazovnih ustanova: ");
         int brojU = scanner.nextInt();
         scanner.nextLine();
@@ -27,54 +28,71 @@ public class Glavna {
             ArrayList<Predmet> predmetiPoUstanovi = unosPredmeta(scanner, profesoriPoUstanovi);
             ArrayList<Student> studentiPoUstanovi = unosStudenta(scanner);
             ArrayList<Ispit> ispitiPoUstanovi = unosIspita(scanner, predmetiPoUstanovi, studentiPoUstanovi);
-
-            System.out.println("Odaberite obrazovnu ustanovu za navedene podatke koju zelite uneti: " + '\n' +
-                    "1 - Veleuciliste jave" + '\n' +
-                    "2 - Fakultet racunarstva: ");
-
-            int odabir = scanner.nextInt();
-            scanner.nextLine();
-
-            System.out.print("Unesite naziv obrazovne ustanove: ");
-            String naziv = scanner.nextLine();
-
-            if (odabir == 1) {
-                VeleucilisteJave vj = new VeleucilisteJave(naziv, predmetiPoUstanovi, profesoriPoUstanovi, studentiPoUstanovi, ispitiPoUstanovi);
-                listaObrazovnih.add(vj);
-                for (int j = 0; j < studentiPoUstanovi.size(); j++) {
-                    System.out.print("Unesite ocenu zavrsnog rada za studenta " + studentiPoUstanovi.get(j) + ": ");
-                    int ocenaZavrsnog = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.print("Unesite ocenu odbrane zavrsnog rada za studenta " + studentiPoUstanovi.get(j) + ": ");
-                    int ocenaOdbrane = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.println("Konacna ocena studija za studenta " + studentiPoUstanovi.get(j) + " je " + vj.izracunajKonacnuOcenuStudijaZaStudenta(ispitiPoUstanovi, ocenaZavrsnog, ocenaOdbrane));
+            unosObrazovneUstanove(scanner,listaObrazovnih, profesoriPoUstanovi, predmetiPoUstanovi, studentiPoUstanovi, ispitiPoUstanovi);
 
 
-                }
-                Student najbolji = vj.odrediNajuspesnijegStudentaNaGodini(2018);
-                System.out.println("Najbolji student u 2018. godini je " + vj.odrediNajuspesnijegStudentaNaGodini(2018) + " JMBG: " + najbolji.getJmbg());
-
-            }
-            if (odabir == 2) {
-                FakultetRacunarstva fr = new FakultetRacunarstva(naziv, predmetiPoUstanovi, profesoriPoUstanovi, studentiPoUstanovi, ispitiPoUstanovi);
-                listaObrazovnih.add(fr);
-                for (int j = 0; j < studentiPoUstanovi.size(); j++) {
-                    System.out.print("Unesite ocenu zavrsnog rada za studenta " + studentiPoUstanovi.get(j) + ": ");
-                    int ocenaZavrsnog = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.print("Unesite ocenu odbrane zavrsnog rada za studenta " + studentiPoUstanovi.get(j) + ": ");
-                    int ocenaOdbrane = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.println("Konacna ocena studija za studenta " + studentiPoUstanovi.get(j) + " je " + fr.izracunajKonacnuOcenuStudijaZaStudenta(ispitiPoUstanovi, ocenaZavrsnog, ocenaOdbrane));
-                }
-                Student najboljiFR = fr.odrediNajuspesnijegStudentaNaGodini(2018);
-                Student rektorov = fr.odrediStudentaZaRektorovuNagradu();
-                System.out.println("Najbolji student u 2018. godini je " + najboljiFR + " JMBG: " + najboljiFR.getJmbg());
-                System.out.println("Student koji je ostvario Rektorovu nagradu je: " + rektorov + "JMBG: " + rektorov.getJmbg());
-            }
         }
+
     }
+
+    public static void unosObrazovneUstanove(Scanner scanner,ArrayList<ObrazovnaUstanova>listaObrazovnih ,ArrayList<Profesor> profesoriPoUstanovi, ArrayList<Predmet> predmetiPoUstanovi, ArrayList<Student> studentiPoUstanovi, ArrayList<Ispit> ispitiPoUstanovi) {
+
+
+        System.out.println("Odaberite obrazovnu ustanovu za navedene podatke koju zelite uneti: " + '\n' +
+                "1 - Veleuciliste jave" + '\n' +
+                "2 - Fakultet racunarstva: ");
+
+        int odabir = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Unesite naziv obrazovne ustanove: ");
+        String naziv = scanner.nextLine();
+
+        ObrazovnaUstanova ustanova;
+
+        if (odabir == 1) {
+
+            ustanova = new VeleucilisteJave(naziv, predmetiPoUstanovi, profesoriPoUstanovi, studentiPoUstanovi, ispitiPoUstanovi);
+            listaObrazovnih.add(ustanova);
+            for (Student student : studentiPoUstanovi) {
+
+                System.out.print("Unesite ocenu zavrsnog rada za studenta " + student + ": ");
+                int ocenaZavrsnog = scanner.nextInt();
+                scanner.nextLine();
+                System.out.print("Unesite ocenu odbrane zavrsnog rada za studenta " + student + ": ");
+                int ocenaOdbrane = scanner.nextInt();
+                scanner.nextLine();
+                System.out.println("Konacna ocena studija za studenta " + student + " je " + ((VeleucilisteJave) ustanova).izracunajKonacnuOcenuStudijaZaStudenta(ispitiPoUstanovi, ocenaZavrsnog, ocenaOdbrane));
+            }
+            Student najbolji = ustanova.odrediNajuspesnijegStudentaNaGodini(2018);
+            System.out.println("Najbolji student u 2018. godini je " + najbolji + " JMBG: " + najbolji.getJmbg());
+
+
+        }
+        else if  (odabir == 2) {
+
+                ustanova = new FakultetRacunarstva(naziv, predmetiPoUstanovi, profesoriPoUstanovi, studentiPoUstanovi, ispitiPoUstanovi);
+                listaObrazovnih.add(ustanova);
+                for (Student student : studentiPoUstanovi) {
+
+                    System.out.print("Unesite ocenu zavrsnog rada za studenta " + student + ": ");
+                    int ocenaZavrsnog = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.print("Unesite ocenu odbrane zavrsnog rada za studenta " + student + ": ");
+                    int ocenaOdbrane = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.println("Konacna ocena studija za studenta " + student + " je " + ((FakultetRacunarstva) ustanova).izracunajKonacnuOcenuStudijaZaStudenta(ispitiPoUstanovi, ocenaZavrsnog, ocenaOdbrane));
+                }
+                Student najboljiFr = ustanova.odrediNajuspesnijegStudentaNaGodini(2018);
+                System.out.println("Najbolji student u 2018. godini je " + najboljiFr + " JMBG: " + najboljiFr.getJmbg());
+                Student rektorov = ((FakultetRacunarstva) ustanova).odrediStudentaZaRektorovuNagradu();
+                System.out.println("Student koji je osvojio rektorovu nagradu je: " + rektorov + " JMBG: " + najboljiFr.getJmbg());
+            }
+
+
+        }
+
+
 
     public static String ocena(int ocena) {
         if (ocena >= 1 && ocena <= 5) {
